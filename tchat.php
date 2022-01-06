@@ -1,3 +1,7 @@
+<?php
+session_start();
+if(!isset($_SESSION['userId'])){ header('location:login.php');}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,34 +70,34 @@ float:none;
     <span class="navbar-toggler-icon"></span>
   </button>
 
+
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item ">
-        <a class="nav-link active" href="mindex.php">Comptes <span class="sr-only">(current)</span></a>
+    <li class="nav-item ">
+        <a class="nav-link " href="index.php">Accueille <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item "><a class="nav-link" href="maccounts.php">Réunios</a></li>
-      <li class="nav-item ">  <a class="nav-link" href="ttontines.php">Tontines</a></li>
-      <li class="nav-item "><a class="nav-link" href="#">Cotisations</a></li>
-      <li class="nav-item ">  <a class="nav-link" href="#">Prêts</a></li>
-      <li class="nav-item ">  <a class="nav-link" href="mfeedback.php">Feedback</a></li>
-      <li class="nav-link ">Creer
+      <li class="nav-item ">  <a class="nav-link" href="accounts.php">Comptes</a></li>
+      <li class="nav-item ">  <a class="nav-link" href="transfer.php">Transfers</a></li>
+      <li class="nav-item ">  <a class="nav-link" href="feedback.php">Feedback</a></li>
+      <li class="nav-link ">Evènements
       <ul class="nav-item ">
-
-      <li><a class="nav-link active" href="#">Pret</a></li>
-      <li><a class="nav-link active" href="maddnew.php">Menbre</a></li>
-      <li><a class="nav-link active" href="#">Reunion</a></li>
-      <li><a class="nav-link active" href="tontines.php">Tontine</a></li>
-      <li><a class="nav-link active" href="#">Election</a></li>
-      <li><a class="nav-link active" href="#">Contribution</a></li>
-
+      <li><a class="nav-link active" href="pret.php">Prêts</a></li>
+      <li><a class="nav-link active" href="treunion.php">Reunions</a></li>
+      <li><a class="nav-link active" href="ament.php">Tontines</a></li>
+      <li><a class="nav-link active" href="telection.php">Elections</a></li>
+      <li><a class="nav-link active" href="tcontribution.php">Contributions</a></li>
+      </ul></li>
+      <li class="nav-item ">Discutions<ul>
+        <li><a class="nav-link" href="dis.php">messages reçus</a></li>
+        <li><a class="nav-link" href="tchat.php">Tchat</a></li>
       </ul></li>
 
       
 
 
     </ul>
-<?php include 'sideButton.php'; ?>
-
+    <?php include 'sideButton.php'; ?>
+    
   </div>
 </nav><br><br><br>  
 <pre>

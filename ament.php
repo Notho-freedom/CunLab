@@ -42,6 +42,7 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
 </head>
 <body style="background:#96D678;background-size: 100%">
 
+
 <style type="text/css">
 li {
 list-style:none !important;
@@ -93,18 +94,32 @@ float:none;
     <span class="navbar-toggler-icon"></span>
   </button>
 
+
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item ">
+    <li class="nav-item ">
         <a class="nav-link " href="index.php">Accueille <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item ">  <a class="nav-link" href="accounts.php">Comptes</a></li>
-      <li class="nav-item "><a class="nav-link" href="#">Réunios</a></li>
-      <li class="nav-item active">  <a class="nav-link" href="ament.php">Tontines</a></li>
-      <li class="nav-item "><a class="nav-link" href="#">Cotisations</a></li>
-      <li class="nav-item ">  <a class="nav-link" href="#">Prêts</a></li>
-      <li class="nav-item ">  <a class="nav-link" href="#">Discutions</a></li>
       <li class="nav-item ">  <a class="nav-link" href="transfer.php">Transfers</a></li>
+      <li class="nav-item ">  <a class="nav-link" href="feedback.php">Feedback</a></li>
+      <li class="nav-link ">Evènements
+      <ul class="nav-item ">
+      <li><a class="nav-link active" href="pret.php">Prêts</a></li>
+      <li><a class="nav-link active" href="treunion.php">Reunions</a></li>
+      <li><a class="nav-link active" href="ament.php">Tontines</a></li>
+      <li><a class="nav-link active" href="telection.php">Elections</a></li>
+      <li><a class="nav-link active" href="tcontribution.php">Contributions</a></li>
+      </ul></li>
+      <li class="nav-item ">Discutions<ul>
+        <li><a class="nav-link" href="dis.php">messages reçus</a></li>
+        <li><a class="nav-link" href="tchat.php">Tchat</a></li>
+      </ul></li>
+
+      
+
+
+    </ul>
     <?php include 'sideButton.php'; ?>
     
   </div>
