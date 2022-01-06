@@ -86,30 +86,30 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
           { $row2 = $array2->fetch_assoc();
             echo "<div class='alert alert-success w-50 mx-auto'>
                   <form method='POST'>
-                    Account No.
+                    Compte No.
                     <input type='text' value='$row2[accountNo]' name='otherNo' class='form-control ' readonly required>
-                    Account Holder Name.
+                    Nom.
                     <input type='text' class='form-control' value='$row2[holderName]' readonly required>
-                    Account Holder Bank Name.
+                    Source.
                     <input type='text' class='form-control' value='$row2[bankName]' readonly required>
-                    Enter Amount for tranfer.
+                    Entrer Le Montant à Tranferer.
                     <input type='number' name='amount' class='form-control' min='500' max='$userData[balance]' required>
-                    <button type='submit' name='transfer' class='btn btn-primary btn-bloc btn-sm my-1'>Tranfer</button>
+                    <button type='submit' name='transfer' class='btn btn-primary btn-bloc btn-sm my-1'>Tranferer</button>
                   </form>
                 </div>";
           }elseif ($array3->num_rows > 0) {
            $row2 = $array3->fetch_assoc();
             echo "<div class='alert alert-success w-50 mx-auto'>
                   <form method='POST'>
-                    Account No.
+                    Compte No.
                     <input type='text' value='$row2[accountNo]' name='otherNo' class='form-control ' readonly required>
-                    Account Holder Name.
+                    Nom.
                     <input type='text' class='form-control' value='$row2[name]' readonly required>
-                    Account Holder Bank Name.
+                    Source.
                     <input type='text' class='form-control' value='".bankname."' readonly required>
-                    Enter Amount for tranfer.
+                    Entrer Le Montant à Tranferer.
                     <input type='number' name='amount' class='form-control' min='1' max='$userData[balance]' required>
-                    <button type='submit' name='transferSelf' class='btn btn-primary btn-bloc btn-sm my-1'>Tranfer</button>
+                    <button type='submit' name='transferSelf' class='btn btn-primary btn-bloc btn-sm my-1'>Tranferer</button>
                   </form>
                 </div>";
           }

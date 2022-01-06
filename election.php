@@ -10,8 +10,19 @@
   {
     if ($con->query("delete from election where id = '$_GET[id]'"))
     {
-      
     }
+  }else{
+    if (isset($_GET['id'])) 
+    {$t=$_POST['utype'];
+    $tp=$_POST['utempt_ren'];
+    $utm=$_POST['uterme'];
+    $id= $_GET['id'];
+      if ($con->query("update election set type='$t', tempt_ren='$tp', terme='$utm'  where id ='$id'"))
+      {
+        header("location:mtelection.php");
+      }
+    } 
+    
   } ?>
 </head>
 <body style="background:#96D678;background-size: 100%">
@@ -81,20 +92,15 @@ float:none;
     
   </div>
 </nav><br><br><br>
-<pre>
-  
-
-  
-</pre>
 <?php
 if (isset($_POST['saveAccount']))
 {
-  $id=  $_POST[terme]+ $_POST[type];
-  if (!$con->query("insert into election (id,terme,tempt_ren,type) values ('$_POST[terme]+ $_POST[type]','$_POST[terme]','$_POST[tempt_ren]','$_POST[type]')")) {
-    echo "<div claass='alert alert-success'>Failed. Error is:".$con->error."</div>";
+  $id= time();
+  if (!$con->query("insert into election (id,terme,tempt_ren,type) values ('$id','$_POST[terme]','$_POST[tempt_ren]','$_POST[type]')")) {
+    echo "<div class='alert alert-info text-center'>Alert: Deux instances d'une même éléction ne peuvent existées.</div>";
   }
   else
-    echo "<div class='alert alert-info text-center'>election Ajouter!!</div>";
+    echo "<div class='alert alert-info text-center'>éléction Ajouter!!</div>";
     
 }
 if (isset($_GET['del']) && !empty($_GET['del']))
@@ -126,8 +132,8 @@ if (isset($_GET['del']) && !empty($_GET['del']))
               <option>Commisaire au compte adjoint</option>
             </select>
           </td>
-          <th>Mandat(jours)</th>
-          <td><input type="number" name="tempt_ren" min="1" value="0" class="form-control input-sm" required placeholder="entrer le Nombre De Menbre..."></td>
+          <th>Fin Du Mandat</th>
+          <td><input type="date" name="tempt_ren" min="1" value="1" class="form-control input-sm" required placeholder="entrer le Nombre De Menbre..."></td>
           </td>
         </tr>
         <tr>
@@ -150,31 +156,5 @@ if (isset($_GET['del']) && !empty($_GET['del']))
   </div>
 </div>
 
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">New Cashier Account</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-       <form method="POST">
-          Entrer les Details
-         <input class="form-control w-75 mx-auto" type="email" name="email" required placeholder="Email">
-         <input class="form-control w-75 mx-auto" type="password" name="password" required placeholder="Password">
-         <input class="form-control w-75 mx-auto" type="text" name="accountType" required placeholder="accountType">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-        <button type="submit" name="saveAccount" class="btn btn-primary">Ajouter</button>
-      </form>
-      </div>
-    </div>
-  </div>
-</div>
 </body>
 </html>

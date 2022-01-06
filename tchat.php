@@ -7,9 +7,9 @@
   <?php require 'assets/function.php'; ?>
   <?php if (isset($_GET['delete'])) 
   {
-    if ($con->query("delete from election where id = '$_GET[delete]'"))
+    if ($con->query("delete from useraccounts where id = '$_GET[delete]'"))
     {
-      header("location:telection.php");
+      header("location:mindex.php");
     }
   } ?>
 </head>
@@ -69,44 +69,60 @@ float:none;
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item ">
-        <a class="nav-link " href="mindex.php">Accueille <span class="sr-only">(current)</span></a>
+        <a class="nav-link active" href="mindex.php">Comptes <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item active"><a class="nav-link" href="maccounts.php">election</a></li>
-      <li class="nav-link "><a class="nav-link active" href="election.php">Creer</a>
-      </li>
+      <li class="nav-item "><a class="nav-link" href="maccounts.php">Réunios</a></li>
+      <li class="nav-item ">  <a class="nav-link" href="ttontines.php">Tontines</a></li>
+      <li class="nav-item "><a class="nav-link" href="#">Cotisations</a></li>
+      <li class="nav-item ">  <a class="nav-link" href="#">Prêts</a></li>
+      <li class="nav-item ">  <a class="nav-link" href="mfeedback.php">Feedback</a></li>
+      <li class="nav-link ">Creer
+      <ul class="nav-item ">
+
+      <li><a class="nav-link active" href="#">Pret</a></li>
+      <li><a class="nav-link active" href="maddnew.php">Menbre</a></li>
+      <li><a class="nav-link active" href="#">Reunion</a></li>
+      <li><a class="nav-link active" href="tontines.php">Tontine</a></li>
+      <li><a class="nav-link active" href="#">Election</a></li>
+      <li><a class="nav-link active" href="#">Contribution</a></li>
+
+      </ul></li>
+
+      
+
+
     </ul>
-    <?php include 'msideButton.php'; ?>
-    
+<?php include 'sideButton.php'; ?>
+
   </div>
-</nav><br><br><br>
+</nav><br><br><br>  
 <pre>
-  
+    
 
 </pre>
 <div class="container">
 <div class="card w-100 text-center shadowBlue">
   <div class="card-header">
-    Toutes les election
+    Tous les Utilisateurs
   </div>
   <div class="card-body">
    <table class="table table-bordered table-sm">
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">ID</th>
-      <th scope="col">Date</th>
-      <th scope="col">Type</th>
-      <th scope="col">Candidats</th>
-      <th scope="col">Mandat</th>
-      <th scope="col">Participants</th>
-      <th scope="col">Theme</th>
+      <th scope="col">Utilisateurs</th>
+      <th scope="col">Types Comptes</th>
+      <th scope="col">No. Comptes</th>
+      <th scope="col">Email</th>
+      <th scope="col">Contacts</th>
+      <th scope="col">Balances</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
     <?php
       $i=0;
-      $array = $con->query("select * from election");
+      $array = $con->query("select distinct * from useraccounts");
       if ($array->num_rows > 0)
       {
         while ($row = $array->fetch_assoc())
@@ -114,20 +130,15 @@ float:none;
     ?>
       <tr>
         <th scope="row"><?php echo $i ?></th>
-        <td><?php echo $row['id'] ?></td>
-        <td><?php echo $row['date'] ?></td>
-        <td><?php echo $row['type'] ?></td>
-        <td><?php echo $row['candidats'] ?></td>
-        <td><?php echo $row['tempt_ren'] ?></td>
-        <td><?php echo $row['participants'] ?></td>
-        <td><?php echo $row['terme'] ?></td>
+        <td><?php echo $row['name'] ?></td>
+        <td><?php echo $row['accountType'] ?></td>
+        <td><?php echo $row['accountNo'] ?></td>
+        <td><?php echo $row['email'] ?></td>
+        <td><?php echo $row['number'] ?></td>
+        <td>Rs.<?php echo $row['balance'] ?></td>
         <td>
-          <a href="showton.php?id=<?php echo $row['id'] ?>" class='btn btn-success btn-sm' data-toggle='tooltip' title="View More info">Voir</a>
-          <a href="mnotice.php?id=<?php echo $row['id'] ?>" class='btn btn-primary btn-sm' data-toggle='tooltip' title="Send notice to this">Menbres</a>
-<a href="telection.php?delete=<?php echo $row['id'] ?>
-" class='btn btn-danger btn-sm' data-toggle='tooltip' 
-title="Delete this account">
-Supprimer</a>
+          <a href="showuser.php?id=<?php echo $row['id'] ?>" class='btn btn-success btn-sm' data-toggle='tooltip' title="View More info">Voir</a>
+          <a href="dis.php?id=<?php echo $row['id'] ?>" class='btn btn-primary btn-sm' data-toggle='tooltip' title="Send notice to this">Message</a>
         </td>
         
       </tr>

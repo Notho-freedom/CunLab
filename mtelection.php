@@ -11,7 +11,8 @@
     {
       header("location:telection.php");
     }
-  } ?>
+  }
+  ?>
 </head>
 <body style="background:#96D678;background-size: 100%">
 
@@ -123,15 +124,52 @@ float:none;
         <td><?php echo $row['terme'] ?></td>
         <td>
           <a href="showton.php?id=<?php echo $row['id'] ?>" class='btn btn-success btn-sm' data-toggle='tooltip' title="View More info">Voir</a>
-          <a href="mnotice.php?id=<?php echo $row['id'] ?>" class='btn btn-primary btn-sm' data-toggle='tooltip' title="Send notice to this">Menbres</a>
+          <button class="btn btn-outline-success btn-sm float-right" data-toggle="modal" data-target="#exampleModal">Modiffier</button>
 <a href="telection.php?delete=<?php echo $row['id'] ?>
 " class='btn btn-danger btn-sm' data-toggle='tooltip' 
 title="Delete this account">
 Supprimer</a>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modiffier l'élection</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form method="POST" autocomplete="on" accept-charset="UTF-8" action="election.php?id=<?php echo $row['id'] ?>">
+          <p><b>Type</b></p>
+          <p>
+            <select class="form-control w-75 mx-auto" name="utype" required>
+              <option>President</option>
+              <option>Trésorié</option>
+              <option>Sécrétaire</option>
+              <option>Sécrétaire adjoint</option>
+              <option>Commisaire au compte</option>
+              <option>Commisaire au compte adjoint</option>
+            </select>
+          </p>
+          <p><b>Fin Du Mandat</b></p>
+          <p><input type="date" name="utempt_ren" min="1" value="1" class="form-control w-75 mx-auto" required placeholder="entrer le Nombre De Menbre..."></p>
+          </p>
+          <p><b>Thème</b></p>
+          <p colspan="3"><input type="text" name="uterme" class="form-control w-75 mx-auto" required placeholder="entrer le Slogan..."></p>
+     </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuller</button>
+        <button type="submit" class="btn btn-primary">Mettre à Jour</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
         </td>
-        
       </tr>
     <?php
+
         }
       }
      ?>
@@ -141,5 +179,7 @@ Supprimer</a>
     <?php echo bankname; ?>
   </div>
 </div>
+
+
 </body>
 </html>

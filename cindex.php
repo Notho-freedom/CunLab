@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['managerId'])){ header('location:login.php');}
+if(!isset($_SESSION['managerId']))){ header('location:login.php');}
 ?>
 <!DOCTYPE html>
 <html>
@@ -95,9 +95,9 @@ if(!isset($_SESSION['managerId'])){ header('location:login.php');}
             echo "<div class='row'>
                   <div class='col'>
                   <form method='POST'>
-                    Account No.
+                    Compte N.
                     <input type='text' value='$row2[id]' name='otherNo' class='form-control ' readonly required>
-                    Account Holder Name.
+                    Nom.
                     <input type='text' class='form-control' value='$row2[holderName]' readonly required>
                     Account Holder Bank Name.
                     <input type='text' class='form-control' value='$row2[bankName]' readonly required>
@@ -118,9 +118,9 @@ if(!isset($_SESSION['managerId'])){ header('location:login.php');}
             <div class='row'>
                   <div class='col'>
                   
-                    Account No.
+                    Compte N.
                     <input type='text' value='$row2[id]' name='otherNo' class='form-control ' readonly required>
-                    Account Holder Name.
+                    Nom.
                     <input type='text' class='form-control' value='$row2[name]' readonly required>
                     Account Holder Bank Name.
                     <input type='text' class='form-control' value='".bankName."' readonly required>Bank Balance
@@ -129,7 +129,7 @@ if(!isset($_SESSION['managerId'])){ header('location:login.php');}
                   
                   </div>
                   <div class='col'>
-                    Transaction Process.
+                    Processus De Transaction.
                     <form method='POST'>
                      
                     <input type='hidden' value='$row2[id]' name='id' class='form-control ' required>
@@ -148,9 +148,8 @@ if(!isset($_SESSION['managerId'])){ header('location:login.php');}
             ";
           }
           else
-            echo "<div class='alert alert-success w-50 mx-auto'>Account No. $_POST[otherNo] Does not exist</div>";
-        }
-  } 
+            echo "<div class='alert alert-success w-50 mx-auto'>Compte N. $_POST[otherNo] Does not exist</div>";
+        }} 
       ?>
   </div>
   <div class="card-footer text-muted">
