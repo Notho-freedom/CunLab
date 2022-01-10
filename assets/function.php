@@ -10,6 +10,24 @@ function setNbr($amount)
 	return $con->query("update tontine set nbre_mbr = '$nmbre_mbr' where id = '$amount'");
 }
 
+function setNbrv($amount)
+{
+	$con = new mysqli('localhost','root','','CunLab');
+	$array = $con->query("select * from vote where id='$amount'");
+	$row = $array->fetch_assoc();
+	$id=$amount+$_SESSION['userId'];
+	$nmbre_mbr = $row['nv'] + 1;
+	return $con->query("update vote set nv = '$nmbre_mbr' where id = '$amount'");
+}
+
+function setNbrc($amount)
+{
+	$con = new mysqli('localhost','root','','CunLab');
+	$array = $con->query("select * from election where id='$amount'");
+	$row = $array->fetch_assoc();
+	$nmbre_mbr = $row['candidats'] + 1;
+	return $con->query("update election set candidats = '$nmbre_mbr' where id = '$amount'");
+}
 
 function setBalance($amount,$process,$accountNo)
 {

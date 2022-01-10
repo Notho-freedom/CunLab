@@ -15,7 +15,7 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
     {
       header("location:mindex.php");
     }
-  } ?>
+  }?>
   <meta charset="utf-8">
 </head>
 <body style="background:#96D678;background-size: 100%">
@@ -59,22 +59,22 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Utilisateurs</th>
+      <th scope="col">Candidats</th>
       <th scope="col">No. Comptes</th>
-      <th scope="col">Balances</th>
-      <th scope="col">Types Comptes</th>
       <th scope="col">Contacts</th>
+      <th scope="col">Campagne</th>
+      <th scope="col">Votes</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
     <?php
       $i=0;
-      $arrays = $con->query("select distinct idu from rej where idt ='$_GET[men]' ");
+      $arrays = $con->query("select distinct * from vote where ide ='$_GET[men]'  ORDER BY `vote`.`nv` DESC");
       if ($arrays->num_rows > 0)
       {
         while ($rows = $arrays->fetch_assoc())
-        {$array = $con->query("select distinct * from useraccounts where id = '$rows[idu]'");
+        {$array = $con->query("select distinct * from useraccounts,vote where useraccounts.id = '$rows[idu]'");
         $row = $array->fetch_assoc();          
         if ($array->num_rows > 0)
           {$i++;
@@ -84,12 +84,14 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
                 <th scope="row"><?php echo $i?></th>
                 <td><?php echo $row['name'] ?></td>
                 <td><?php echo $row['accountNo'] ?></td>
-                <td>Rs.<?php echo $row['balance'] ?></td>
-                <td><?php echo $row['accountType'] ?></td>
                 <td><?php echo $row['number'] ?></td>
+                <td><?php echo $rows['cam'] ?></td>
+                <td><?php echo $rows['nv'] ?></td>
                 <td>
-                  <a href="show.php?id=<?php echo $row['id'] ?>" class='btn btn-success btn-sm' data-toggle='tooltip' title="View More info">Voir</a>
-                  <a href="sm.php?id=<?php echo $row['id'] ?>" class='btn btn-primary btn-sm' data-toggle='tooltip' title="Send notice to this">Message</a>
+                <?php $id=$_GET['men']+$row['idu']?>
+                <a href="telectionu.php?id=<?php echo $id ?>?idV=<?php echo $row['accountNo']?>" class='btn btn-success btn-sm' data-toggle='tooltip' title="Voté">Voté</a>
+                <a href="showuser.php?id=<?php echo $row['idu'] ?>" class='btn btn-success btn-sm' data-toggle='tooltip' title="Voir ses infos">Voir</a>
+                <a href="sm.php?id=<?php echo $rows['idu'] ?>" class='btn btn-primary btn-sm' data-toggle='tooltip' title="envoyé un Message">Message</a>
                 </td>
                 
               </tr>

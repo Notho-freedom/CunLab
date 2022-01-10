@@ -110,11 +110,11 @@ float:none;
    <table class="table table-bordered table-sm bg-dark text-white">
   <thead>
     <tr>
+      <th scope="col">Date</th>
       <th scope="col">De</th>
-      <th scope="col">Compte No.</th>
       <th scope="col">Contact</th>
       <th scope="col">Message</th>
-      <th scope="col"></th>
+      <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -127,8 +127,8 @@ float:none;
         {
     ?>
       <tr>
+        <td><?php echo $row['date'] ?></td>
         <td><?php echo $row['name'] ?></td>
-        <td><?php echo $row['accountNo'] ?></td>
         <td><?php echo $row['number'] ?></td>
         <td><?php echo $row['mesg'] ?></td>
         <td>

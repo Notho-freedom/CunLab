@@ -16,9 +16,15 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
       header("location:mindex.php");
     }
   } ?>
+  <meta charset="utf-8">
 </head>
 <body style="background:#96D678;background-size: 100%">
+<<pre>
 
+
+
+
+</pre>
 <style type="text/css">
 li {
 list-style:none !important;
@@ -109,7 +115,7 @@ float:none;
 <div class="container">
 <div class="card w-100 text-center shadowBlue">
   <div class="card-header">
-    Message
+   Vous Ecrivez Un Message Pour <kbd> <?php echo $row['name'] ?></kbd>
   </div>
     <div class="card-body">
       <form method="POST">

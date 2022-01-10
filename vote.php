@@ -15,17 +15,30 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
     {
       header("location:mindex.php");
     }
+  }else{
+    if (isset($_POST['savecan'])) 
+    {
+        $id=$_GET['id']+$_SESSION['userId'];
+      if ($con->query("insert into vote (id,ide,idu,nv,cam)values('$id','$_GET[id]','$_SESSION[userId]',0,'$_POST[cam]')"))
+      {
+        if ($con->query("insert into partp (id,idE,idv)values('$id','$_GET[id]','$_SESSION[userId]')")) {
+            setNbrc($_GET['id']);
+            echo "<div class='alert alert-success'>Votre Candidature a bien été Enregistrée!!!</div>";
+        }
+      }else{
+        echo "<div class='alert alert-warning text-center rounded-0'>Alert: Vous ne pouvez pas avoir une Double Candidature Pour Une Même éléction!!!</div>";
+      }
+    }
   } ?>
   <meta charset="utf-8">
 </head>
 <body style="background:#96D678;background-size: 100%">
-<<pre>
+<pre>
 
 
 
 
 </pre>
-
 <style type="text/css">
 li {
 list-style:none !important;
@@ -108,7 +121,7 @@ float:none;
   </div>
 </nav><br><br><br>
 <?php 
-  $array = $con->query("select * from useraccounts,branch where useraccounts.id = '$_GET[id]' AND useraccounts.branch = branch.branchId");
+  $array = $con->query("select * from useraccounts,branch where useraccounts.id = '$_SESSION[userId]' AND useraccounts.branch = branch.branchId");
   $row = $array->fetch_assoc();
  ?>
 <div class="container">
@@ -162,6 +175,14 @@ float:none;
         </tr><tr>
           <td>Date De Creat.</td>
           <th colspan="3"><?php echo $row['date'] ?></th>
+        </tr>
+        <tr>
+            <td colspan="4">
+            <form method="POST" autocomplete="on" accept-charset="UTF-8">
+                <p>Campagne: <textarea class="form-control" name="cam" required placeholder="entrez votre Campagne ici..."></textarea></p>
+                <p><button type="submit" name="savecan" class="btn btn-primary btn-sm">Déposer</button></p>
+            </form>
+            </td>
         </tr>
       </tbody>
     </table>

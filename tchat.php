@@ -91,10 +91,6 @@ float:none;
         <li><a class="nav-link" href="dis.php">messages reçus</a></li>
         <li><a class="nav-link" href="tchat.php">Tchat</a></li>
       </ul></li>
-
-      
-
-
     </ul>
     <?php include 'sideButton.php'; ?>
     
@@ -107,19 +103,21 @@ float:none;
 <div class="container">
 <div class="card w-100 text-center shadowBlue">
   <div class="card-header">
-    Tous les Utilisateurs
+    Tous les Utilisateurs                           <a href="tchat-rech.php" ><button class="btn btn-outline-success btn-sm float-right" data-toggle="modal" data-target="#exampleModal">Retrouver</button></a>
   </div>
   <div class="card-body">
    <table class="table table-bordered table-sm">
   <thead>
-    <tr>
+  <tr>
       <th scope="col">#</th>
+      <th scope="col">ID</th>
       <th scope="col">Utilisateurs</th>
       <th scope="col">Types Comptes</th>
       <th scope="col">No. Comptes</th>
       <th scope="col">Email</th>
       <th scope="col">Contacts</th>
       <th scope="col">Balances</th>
+      <th scope="col">Proffession</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
@@ -132,28 +130,33 @@ float:none;
         while ($row = $array->fetch_assoc())
         {$i++;
     ?>
-      <tr>
-        <th scope="row"><?php echo $i ?></th>
-        <td><?php echo $row['name'] ?></td>
-        <td><?php echo $row['accountType'] ?></td>
-        <td><?php echo $row['accountNo'] ?></td>
-        <td><?php echo $row['email'] ?></td>
-        <td><?php echo $row['number'] ?></td>
-        <td>Rs.<?php echo $row['balance'] ?></td>
-        <td>
-          <a href="showuser.php?id=<?php echo $row['id'] ?>" class='btn btn-success btn-sm' data-toggle='tooltip' title="View More info">Voir</a>
-          <a href="dis.php?id=<?php echo $row['id'] ?>" class='btn btn-primary btn-sm' data-toggle='tooltip' title="Send notice to this">Message</a>
-        </td>
-        
-      </tr>
+        <tr>
+          <th scope="row"><?php echo $i ?></th>
+          <td><?php echo $row['id'] ?></td>
+          <td><?php echo $row['name'] ?></td>
+          <td><?php echo $row['accountType'] ?></td>
+          <td><?php echo $row['accountNo'] ?></td>
+          <td><?php echo $row['email'] ?></td>
+          <td><?php echo $row['number'] ?></td>
+          <td>Rs.<?php echo $row['balance'] ?></td>
+          <td><?php echo $row['source'] ?></td>
+          <td>
+            <a href="showuser.php?id=<?php echo $row['id'] ?>" class='btn btn-success btn-sm' data-toggle='tooltip' title="View More info">Voir</a>
+            <a href="dis.php?id=<?php echo $row['id'] ?>" class='btn btn-primary btn-sm' data-toggle='tooltip' title="Send notice to this">Message</a>
+          </td>
+        </tr>
     <?php
         }
       }
-     ?>
+      ?>
   </tbody>
 </table>
   <div class="card-footer text-muted">
     <?php echo bankname; ?>
+  </div>
+</div>
+      </div>
+    </div>
   </div>
 </div>
 </body>

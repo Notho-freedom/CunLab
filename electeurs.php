@@ -15,7 +15,7 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
     {
       header("location:mindex.php");
     }
-  } ?>
+  }?>
   <meta charset="utf-8">
 </head>
 <body style="background:#96D678;background-size: 100%">
@@ -57,7 +57,7 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
   <div class="card-body">
    <table class="table table-bordered table-sm">
   <thead>
-    <tr>
+  <tr>
       <th scope="col">#</th>
       <th scope="col">Utilisateurs</th>
       <th scope="col">No. Comptes</th>
@@ -70,26 +70,27 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
   <tbody>
     <?php
       $i=0;
-      $arrays = $con->query("select distinct idu from rej where idt ='$_GET[men]' ");
+      $con->query("delete from partp where id = idE ");
+      $arrays = $con->query("select distinct * from partp");
       if ($arrays->num_rows > 0)
       {
         while ($rows = $arrays->fetch_assoc())
-        {$array = $con->query("select distinct * from useraccounts where id = '$rows[idu]'");
+        {$array = $con->query("select distinct * from useraccounts where id = '$rows[idv]'");
         $row = $array->fetch_assoc();          
         if ($array->num_rows > 0)
           {$i++;
         
     ?>
               <tr>
-                <th scope="row"><?php echo $i?></th>
+              <th scope="row"><?php echo $i?></th>
                 <td><?php echo $row['name'] ?></td>
                 <td><?php echo $row['accountNo'] ?></td>
                 <td>Rs.<?php echo $row['balance'] ?></td>
                 <td><?php echo $row['accountType'] ?></td>
                 <td><?php echo $row['number'] ?></td>
                 <td>
-                  <a href="show.php?id=<?php echo $row['id'] ?>" class='btn btn-success btn-sm' data-toggle='tooltip' title="View More info">Voir</a>
-                  <a href="sm.php?id=<?php echo $row['id'] ?>" class='btn btn-primary btn-sm' data-toggle='tooltip' title="Send notice to this">Message</a>
+                <a href="showuser.php?id=<?php echo $row['id'] ?>" class='btn btn-success btn-sm' data-toggle='tooltip' title="Voir ses infos">Voir</a>
+                <a href="sm.php?id=<?php echo $rows['id'] ?>" class='btn btn-primary btn-sm' data-toggle='tooltip' title="envoyé un Message">Message</a>
                 </td>
                 
               </tr>

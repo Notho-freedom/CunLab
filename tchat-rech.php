@@ -11,20 +11,13 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
   <?php require 'assets/function.php'; ?>
   <?php if (isset($_GET['delete'])) 
   {
-    if ($con->query("delete from useraccounts where id = '$_GET[id]'"))
+    if ($con->query("delete from useraccounts where id = '$_GET[delete]'"))
     {
       header("location:mindex.php");
     }
   } ?>
-  <meta charset="utf-8">
 </head>
 <body style="background:#96D678;background-size: 100%">
-<<pre>
-
-
-
-
-</pre>
 
 <style type="text/css">
 li {
@@ -98,78 +91,84 @@ float:none;
         <li><a class="nav-link" href="dis.php">messages reçus</a></li>
         <li><a class="nav-link" href="tchat.php">Tchat</a></li>
       </ul></li>
-
-      
-
-
     </ul>
     <?php include 'sideButton.php'; ?>
     
   </div>
-</nav><br><br><br>
-<?php 
-  $array = $con->query("select * from useraccounts,branch where useraccounts.id = '$_GET[id]' AND useraccounts.branch = branch.branchId");
-  $row = $array->fetch_assoc();
- ?>
+</nav><br><br><br>  
+<pre>
+    
+
+</pre>
 <div class="container">
 <div class="card w-100 text-center shadowBlue">
   <div class="card-header">
-    <ins>Profile De</ins>  <?php echo "<kbd> "; echo $row['name'];echo "  ";echo $row['prenom'];echo "  #"; echo $row['accountNo']; echo "</kbd>";?>
-  </div>
+    Retrouver Un Menbre
+              <form method="POST" autocomplete="on" accept-charset="UTF-8">
+              <p><b>Chercher Par:
+               id - name - email - address - branch - prenom - number
+            </b>
+          </p>
+          <p><input type="text" name="elem" class="form-control w-75 mx-auto" required placeholder="entrer l'element à retrouver.."></p>
+          </p>
+     </div>
+        <button type="submit" name="rech"  class="btn btn-outline-success btn-sm float-right" data-toggle="modal" data-target="#exampleModal">Retrouver</button>
+      </form>
   <div class="card-body">
-    <table class="table table-bordered">
-      <tbody>
+   <table class="table table-bordered table-sm">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">ID</th>
+      <th scope="col">Utilisateurs</th>
+      <th scope="col">Types Comptes</th>
+      <th scope="col">No. Comptes</th>
+      <th scope="col">Email</th>
+      <th scope="col">Contacts</th>
+      <th scope="col">Balances</th>
+      <th scope="col">Proffession</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  <?php
+      if (isset($_POST['rech'])) 
+      {
+        $elem = $_POST['elem'];
+        $j=0;
+        $array = $con->query("select distinct * from useraccounts  where balance='$elem' or  address ='$elem' or  accountNo= '$elem' or  source= '$elem' or city= '$elem' or  name = '$elem' or email='$elem' or id='$elem' or number='$elem' or accountType='$elem'");
+        if ($array->num_rows > 0)
+        {
+          while ($row = $array->fetch_assoc())
+          {$j++;
+      ?>
         <tr>
-          <td>Nom</td>
-          <th><?php echo $row['name'] ?></th>
-          <td>Prenom</td>
-          <th><?php echo $row['prenom'] ?></th>
-        </tr><tr>
-          <td>Email</td>
-          <th><?php echo $row['email'] ?></th>
-          <td>Account No</td>
-          <th><?php echo $row['accountNo'] ?></th>
-        </tr><tr>
-          <td>Genre</td>
-          <th><?php echo $row['genre'] ?></th>
-          <td>Parts</td>
-          <th><?php echo $row['nb_par'] ?></th>
-        </tr><tr>
-          <td>Profession</td>
-          <th><?php echo $row['source'] ?></th>
-          <td>Date De Nais.</td>
-          <th><?php echo $row['date_naiss'] ?></th>
-        </tr><tr>
-          <td>Branche</td>
-          <th><?php echo $row['branchName'] ?></th>
-          <td>Code Branche </td>
-          <th><?php echo $row['branchNo'] ?></th>
-        </tr><tr>
-          <td>Solde</td>
-          <th><?php echo $row['balance'] ?></th>
-          <td>Type De Compte</td>
-          <th><?php echo $row['accountType'] ?></th>
-        </tr><tr>
-          <td>NCIN</td>
-          <th><?php echo $row['cnic'] ?></th>
-          <td>Ville</td>
-          <th><?php echo $row['city'] ?></th>
-        </tr><tr>
-          <td>Contact</td>
-          <th><?php echo $row['number'] ?></th>
-          <td>Adresse</td>
-          <th><?php echo $row['address'] ?></th>
-        </tr><tr>
-          <td>Date De Creat.</td>
-          <th colspan="3"><?php echo $row['date'] ?></th>
+          <th scope="row"><?php echo $j ?></th>
+          <td><?php echo $row['id'] ?></td>
+          <td><?php echo $row['name'] ?></td>
+          <td><?php echo $row['accountType'] ?></td>
+          <td><?php echo $row['accountNo'] ?></td>
+          <td><?php echo $row['email'] ?></td>
+          <td><?php echo $row['number'] ?></td>
+          <td>Rs.<?php echo $row['balance'] ?></td>
+          <td><?php echo $row['source'] ?></td>
+          <td>
+            <a href="showuser.php?id=<?php echo $row['id'] ?>" class='btn btn-success btn-sm' data-toggle='tooltip' title="View More info">Voir</a>
+            <a href="dis.php?id=<?php echo $row['id'] ?>" class='btn btn-primary btn-sm' data-toggle='tooltip' title="Send notice to this">Message</a>
+          </td>
         </tr>
-      </tbody>
-    </table>
-  </div>
+<?php
+      } 
+    } 
+  }
+    ?>
+
+  </tbody>
+</table>
   <div class="card-footer text-muted">
     <?php echo bankname; ?>
   </div>
 </div>
-
 </body>
 </html>
