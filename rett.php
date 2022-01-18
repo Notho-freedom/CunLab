@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['managerId'])){ header('location:login.php');}
+if(!isset($_SESSION['userId'])){ header('location:login.php');}
 ?>
 <!DOCTYPE html>
 <html>
@@ -11,9 +11,9 @@ if(!isset($_SESSION['managerId'])){ header('location:login.php');}
   <?php require 'assets/function.php'; ?>
   <?php if (isset($_GET['delete'])) 
   {
-    if ($con->query("delete from tontine where id = '$_GET[delete]'"))
+    if ($con->query("delete from useraccounts where id = '$_GET[delete]'"))
     {
-      header("location:ttontines.php");
+      header("location:mindex.php");
     }
   } ?>
 </head>
@@ -70,32 +70,54 @@ float:none;
     <span class="navbar-toggler-icon"></span>
   </button>
 
+
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item ">
-        <a class="nav-link " href="mindex.php">Accueille <span class="sr-only">(current)</span></a>
+    <li class="nav-item ">
+        <a class="nav-link " href="index.php">Accueille <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item active"><a class="nav-link" href="maccounts.php">Tontines</a></li>
-      <li class="nav-link "><a class="nav-link active" href="tontines.php">Creer</a>
-      </li>
+      <li class="nav-item ">  <a class="nav-link" href="accounts.php">Comptes</a></li>
+      <li class="nav-item ">  <a class="nav-link" href="transfer.php">Transfers</a></li>
+      <li class="nav-item ">  <a class="nav-link" href="feedback.php">Feedback</a></li>
+      <li class="nav-link ">Evènements
+      <ul class="nav-item ">
+      <li><a class="nav-link active" href="pret.php">Prêts</a></li>
+      <li><a class="nav-link active" href="treunion.php">Reunions</a></li>
+      <li><a class="nav-link active" href="ament.php">Tontines</a></li>
+      <li><a class="nav-link active" href="telection.php">Elections</a></li>
+      <li><a class="nav-link active" href="tcontribution.php">Contributions</a></li>
+      </ul></li>
+      <li class="nav-item ">Discutions<ul>
+        <li><a class="nav-link" href="dis.php">messages reçus</a></li>
+        <li><a class="nav-link" href="tchat.php">Tchat</a></li>
+      </ul></li>
     </ul>
-    <?php include 'msideButton.php'; ?>
+    <?php include 'sideButton.php'; ?>
     
   </div>
-</nav><br><br><br>
+</nav><br><br><br>  
 <pre>
-  
+    
 
 </pre>
 <div class="container">
 <div class="card w-100 text-center shadowBlue">
   <div class="card-header">
-    Toutes les Tontines                           <a href="rett.php" ><button class="btn btn-outline-success btn-sm float-right" data-toggle="modal" data-target="#exampleModal">Retrouver</button></a>  
-  </div>
+    Retrouver Une tontine
+    <form method="POST" autocomplete="on" accept-charset="UTF-8">
+          <p><b>Chercher Par:
+               id - Nom - Type - Nombre De Menbres
+            </b>
+          </p>
+          <p><input type="text" name="elem" class="form-control w-75 mx-auto" required placeholder="entrer l'element à retrouver.."></p>
+          </p>
+     </div>
+        <button type="submit" name="rech"  class="btn btn-outline-success btn-sm float-right" data-toggle="modal" data-target="#exampleModal">Retrouver</button>
+      </form>
   <div class="card-body">
    <table class="table table-bordered table-sm">
   <thead>
-    <tr>
+  <tr>
       <th scope="col">#</th>
       <th scope="col">ID</th>
       <th scope="col">Nom</th>
@@ -109,9 +131,12 @@ float:none;
     </tr>
   </thead>
   <tbody>
-    <?php
+  <?php
+        if (isset($_POST['rech'])) 
+        {
       $i=0;
-      $array = $con->query("select * from tontine");
+      $elem = $_POST['elem'];
+      $array = $con->query("select * from tontine where id='$elem' or  nom ='$elem' or  type= '$elem' or  nbre_mbr= '$elem'");
       if ($array->num_rows > 0)
       {
         while ($row = $array->fetch_assoc())
@@ -130,7 +155,7 @@ float:none;
         
         <td>
           <a href="showton.php?id=<?php echo $row['id'] ?>" class='btn btn-success btn-sm' data-toggle='tooltip' title="View More info">Voir</a>
-          <a href="mnotice.php?id=<?php echo $row['id'] ?>" class='btn btn-primary btn-sm' data-toggle='tooltip' title="Send notice to this">Menbres</a>
+          <a href="ment.php?men=<?php echo $row['id'] ?>" class='btn btn-primary btn-sm' data-toggle='tooltip' title="Send notice to this">Menbres</a>
 <a href="ttontines.php?delete=<?php echo $row['id'] ?>
 " class='btn btn-danger btn-sm' data-toggle='tooltip' 
 title="Delete this account">
@@ -138,10 +163,12 @@ Supprimer</a>
         </td>
         
       </tr>
-    <?php
-        }
-      }
-     ?>
+<?php
+      } 
+    }
+}
+    ?>
+
   </tbody>
 </table>
   <div class="card-footer text-muted">

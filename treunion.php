@@ -1,7 +1,4 @@
-<?php
-session_start();
-if(!isset($_SESSION['managerId'])){ header('location:login.php');}
-?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,9 +8,9 @@ if(!isset($_SESSION['managerId'])){ header('location:login.php');}
   <?php require 'assets/function.php'; ?>
   <?php if (isset($_GET['delete'])) 
   {
-    if ($con->query("delete from tontine where id = '$_GET[delete]'"))
+    if ($con->query("delete from reunion where date_reunion = '$_GET[delete]'"))
     {
-      header("location:ttontines.php");
+      header("location:treunion.php");
     }
   } ?>
 </head>
@@ -64,7 +61,7 @@ float:none;
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
  <a class="navbar-brand" href="#">
     <img src="images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
-   <!--  <i class="d-inline-block  fa fa-building fa-fw"></i> --><?php echo bankname; ?>
+   <!--  <i class="d-inline-block  fa fa-building fa-fw"></i> -->CunLab
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -75,8 +72,8 @@ float:none;
       <li class="nav-item ">
         <a class="nav-link " href="mindex.php">Accueille <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item active"><a class="nav-link" href="maccounts.php">Tontines</a></li>
-      <li class="nav-link "><a class="nav-link active" href="tontines.php">Creer</a>
+      <li class="nav-item active"><a class="nav-link" href="maccounts.php">reunions</a></li>
+      <li class="nav-link "><a class="nav-link active" href="reunions.php">Creer</a>
       </li>
     </ul>
     <?php include 'msideButton.php'; ?>
@@ -90,28 +87,26 @@ float:none;
 <div class="container">
 <div class="card w-100 text-center shadowBlue">
   <div class="card-header">
-    Toutes les Tontines                           <a href="rett.php" ><button class="btn btn-outline-success btn-sm float-right" data-toggle="modal" data-target="#exampleModal">Retrouver</button></a>  
+    Toutes les reunions
   </div>
   <div class="card-body">
    <table class="table table-bordered table-sm">
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">ID</th>
-      <th scope="col">Nom</th>
-      <th scope="col">Type</th>
-      <th scope="col">Nbre.Menbre</th>
-      <th scope="col">Solde</th>
-      <th scope="col">Slogan</th>
-      <th scope="col">Règement</th>
-      <th scope="col">Date De Creation</th>
-      <th scope="col">Actions</th>
+      <th scope="col">Participants</th>
+      <th scope="col">Motif</th>
+      <th scope="col">Beneficiaire</th>
+      <th scope="col">Lieu</th>
+      <th scope="col">Date de la reunion</th>
+      <th scope="col">Liste de presence</th>
+      
     </tr>
   </thead>
   <tbody>
     <?php
       $i=0;
-      $array = $con->query("select * from tontine");
+      $array = $con->query("select * from reunion");
       if ($array->num_rows > 0)
       {
         while ($row = $array->fetch_assoc())
@@ -119,19 +114,18 @@ float:none;
     ?>
       <tr>
         <th scope="row"><?php echo $i ?></th>
-        <td><?php echo $row['id'] ?></td>
-        <td><?php echo $row['nom'] ?></td>
-        <td><?php echo $row['type'] ?></td>
-        <td><?php echo $row['nbre_mbr'] ?></td>
-        <td>Rs.<?php echo $row['montant'] ?></td>
-        <td><?php echo $row['slogan'] ?></td>
-        <td><?php echo $row['rule'] ?></td>
-        <td><?php echo $row['date_creation'] ?></td>
-        
+        <td><?php echo $row['participants'] ?></td>       
+        <td><?php echo $row['motif'] ?></td>
+        <td><?php echo $row['beneficiaire'] ?></td>
+        <td><?php echo $row['lieu'] ?></td>
+        <td><?php echo $row['date_reunion'] ?></td>
+        <td><?php echo $row['liste_de_presence'] ?></td> 
+              
         <td>
-          <a href="showton.php?id=<?php echo $row['id'] ?>" class='btn btn-success btn-sm' data-toggle='tooltip' title="View More info">Voir</a>
-          <a href="mnotice.php?id=<?php echo $row['id'] ?>" class='btn btn-primary btn-sm' data-toggle='tooltip' title="Send notice to this">Menbres</a>
-<a href="ttontines.php?delete=<?php echo $row['id'] ?>
+          <a href="showreu.php?id=<?php echo $row['date_reunion'] ?>" class='btn btn-success btn-sm' data-toggle='tooltip' title="View More info">Voir</a>
+          <a href="pret.php?id=<?php echo $row['date_reunion'] ?>" class='btn btn-success btn-sm' data-toggle='tooltip' title="View More info">pret</a>
+          <a href="mnotice.php?id=<?php echo $row['date_reunion'] ?>" class='btn btn-primary btn-sm' data-toggle='tooltip' title="Send notice to this">Menbres</a>
+<a href="treunion.php?delete=<?php echo $row['date_reunion'] ?>
 " class='btn btn-danger btn-sm' data-toggle='tooltip' 
 title="Delete this account">
 Supprimer</a>
@@ -145,7 +139,7 @@ Supprimer</a>
   </tbody>
 </table>
   <div class="card-footer text-muted">
-    <?php echo bankname; ?>
+    CunLab
   </div>
 </div>
 </body>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['managerId'])){ header('location:login.php');}
+if(!isset($_SESSION['userId'])){ header('location:login.php');}
 ?>
 <!DOCTYPE html>
 <html>
@@ -15,8 +15,19 @@ if(!isset($_SESSION['managerId'])){ header('location:login.php');}
     {
       header("location:telection.php");
     }
-  }
-  ?>
+  }else{
+    if (isset($_GET['id'])) 
+    { $id=$_GET['id']+$_SESSION['userId']+$_GET['idV'];
+        if ($con->query("insert into partp (id,idE,idv)values('$id','$_GET[id]','$_SESSION[userId]')")) {
+              setNbrv($_GET['id']);
+              header("location:telectionu.php");
+              echo "<div class='alert alert-success'>Merci D'avoir Voté!!!</div>";
+          }else{
+              echo "<div class='alert alert-warning text-center rounded-0'>Ce Vote n'est Pas Autoriser !!!</div>";
+          }
+          
+      }
+  }  ?>
 </head>
 <body style="background:#96D678;background-size: 100%">
 
@@ -71,17 +82,33 @@ float:none;
     <span class="navbar-toggler-icon"></span>
   </button>
 
+
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item ">
-        <a class="nav-link " href="mindex.php">Accueille <span class="sr-only">(current)</span></a>
+    <li class="nav-item ">
+        <a class="nav-link " href="index.php">Accueille <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item active"><a class="nav-link" href="maccounts.php">election</a></li>
-      <li class="nav-link "><a class="nav-link active" href="election.php">Creer</a>
-      </li>
+      <li class="nav-item ">  <a class="nav-link" href="accounts.php">Comptes</a></li>
+      <li class="nav-item ">  <a class="nav-link" href="transfer.php">Transfers</a></li>
+      <li class="nav-item ">  <a class="nav-link" href="feedback.php">Feedback</a></li>
+      <li class="nav-link ">Evènements
+      <ul class="nav-item ">
+      <li><a class="nav-link active" href="pret.php">Prêts</a></li>
+      <li><a class="nav-link active" href="treunion.php">Reunions</a></li>
+      <li><a class="nav-link active" href="ament.php">Tontines</a></li>
+      <li><a class="nav-link active" href="telection.php">Elections</a></li>
+      <li><a class="nav-link active" href="tcontribution.php">Contributions</a></li>
+      </ul></li>
+      <li class="nav-item ">Discutions<ul>
+        <li><a class="nav-link" href="dis.php">messages reçus</a></li>
+        <li><a class="nav-link" href="tchat.php">Tchat</a></li>
+      </ul></li>
+
+      
+
+
     </ul>
-    <?php include 'msideButton.php'; ?>
-    
+    <?php include 'sideButton.php'; ?>
   </div>
 </nav><br><br><br>
 <pre>
@@ -98,7 +125,6 @@ float:none;
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">ID</th>
       <th scope="col">Date</th>
       <th scope="col">Type</th>
       <th scope="col">Candidats</th>
@@ -119,7 +145,6 @@ float:none;
     ?>
       <tr>
         <th scope="row"><?php echo $i ?></th>
-        <td><?php echo $row['id'] ?></td>
         <td><?php echo $row['date'] ?></td>
         <td><?php echo $row['type'] ?></td>
         <td><?php echo $row['candidats'] ?></td>
@@ -127,53 +152,13 @@ float:none;
         <td><?php echo $row['participants'] ?></td>
         <td><?php echo $row['terme'] ?></td>
         <td>
-          <a href="showton.php?id=<?php echo $row['id'] ?>" class='btn btn-success btn-sm' data-toggle='tooltip' title="View More info">Voir</a>
-          <button class="btn btn-outline-success btn-sm float-right" data-toggle="modal" data-target="#exampleModal">Modiffier</button>
-<a href="telection.php?delete=<?php echo $row['id'] ?>
-" class='btn btn-danger btn-sm' data-toggle='tooltip' 
-title="Delete this account">
-Supprimer</a>
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modiffier l'élection</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <form method="POST" autocomplete="on" accept-charset="UTF-8" action="election.php?id=<?php echo $row['id'] ?>">
-          <p><b>Type</b></p>
-          <p>
-            <select class="form-control w-75 mx-auto" name="utype" required>
-              <option>President</option>
-              <option>Trésorié</option>
-              <option>Sécrétaire</option>
-              <option>Sécrétaire adjoint</option>
-              <option>Commisaire au compte</option>
-              <option>Commisaire au compte adjoint</option>
-            </select>
-          </p>
-          <p><b>Fin Du Mandat</b></p>
-          <p><input type="date" name="utempt_ren" min="1" value="1" class="form-control w-75 mx-auto" required placeholder="entrer le Nombre De Menbre..."></p>
-          </p>
-          <p><b>Thème</b></p>
-          <p colspan="3"><input type="text" name="uterme" class="form-control w-75 mx-auto" required placeholder="entrer le Slogan..."></p>
-     </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuller</button>
-        <button type="submit" class="btn btn-primary">Mettre à Jour</button>
-      </form>
-      </div>
-    </div>
-  </div>
-</div>
+          <a href="cand.php?men=<?php echo $row['id'] ?>" class='btn btn-success btn-sm' data-toggle='tooltip' title="Voir Les Candidatures">Candidatures</a>
+          <a href="electeurs.php" class='btn btn-primary btn-sm' data-toggle='tooltip' title="Voir qui a voté">Electeurs</a>
+          <a href="vote.php?id=<?php echo $row['id'] ?>" class='btn btn-danger btn-sm' data-toggle='tooltip' title="Ajouter Ma Candidature">Participer</a>
         </td>
+        
       </tr>
     <?php
-
         }
       }
      ?>
@@ -183,7 +168,5 @@ Supprimer</a>
     <?php echo bankname; ?>
   </div>
 </div>
-
-
 </body>
 </html>

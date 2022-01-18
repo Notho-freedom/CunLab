@@ -131,7 +131,7 @@ float:none;
 <div class="container">
 <div class="card w-100 text-center shadowBlue">
   <div class="card-header">
-    Toutes les Tontines
+    Toutes les Tontines                           <a href="rettu.php" ><button class="btn btn-outline-success btn-sm float-right" data-toggle="modal" data-target="#exampleModal">Retrouver</button></a>
   </div>
   <div class="card-body">
    <table class="table table-bordered table-sm">
